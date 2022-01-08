@@ -1,12 +1,13 @@
 import pygame # importing the pygame module
 import os #importing os to set the path to our assets
+from enemy.mosquito import Mosquito
 
 class Game:
     def __init__(self):
         self.width=900
         self.height=674
         self.win=pygame.display.set_mode((self.width, self.height))
-        self.enemies=[]
+        self.enemies=[Mosquito()]
         self.towers=[]
         self.lives=10
         self.money=100
@@ -28,9 +29,9 @@ class Game:
                 if(event.type == pygame.QUIT):
                     run=False
 
-                pos=pygame.mouse.get_pos()
-                if(event.type==pygame.MOUSEBUTTONDOWN):
-                    pass
+                # pos=pygame.mouse.get_pos()
+                # if(event.type==pygame.MOUSEBUTTONDOWN):
+                #     pass
 
             self.draw() #calling our draw method in the run method
 
@@ -42,6 +43,12 @@ class Game:
         # used it to know the position of the paths
         # for p in self.clicks:
         #     pygame.draw.circle(self.win, (255,0,0), (p[0],p[1]), 5)
+
+        # draw enemies
+
+        for en in self.enemies:
+            en.draw(self.win)
+
         pygame.display.update()
 
 G_Obj=Game()

@@ -1,17 +1,20 @@
+from os import path
 import pygame
 
 class Enemy:
     imgs=[]
 
-    def __init__(self, x, y, width, height):
-        self.x=x
-        self.y=y
-        self.width=width
-        self.height=height
+    def __init__(self):
+        self.width=40
+        self.height=40
         self.animation_count=0
         self.health=1
+        self.vel=3
         self.path=[(5, 318), (53, 346), (113, 401), (172, 414), (227, 366), (276, 284), (320, 284), (383, 292), (434, 247), (492, 214), (550, 206), (611, 216), (668, 246), (706, 303), (724, 354), (717, 375), (682, 428), (638, 455), (589, 471), (540, 472), (487, 463), (496, 419), (507, 378), (531, 347)]
+        self.x=self.path[0][0]
+        self.y=self.path[0][1]
         self.img=None
+        self.path_pos=1
 
     def draw(self, win):
         """
@@ -19,11 +22,11 @@ class Enemy:
         :param win: surface
         :return: None
         """
-        self.animation_count+=1
         self.img=self.imgs[self.animation_count]
+        self.animation_count+=1
         if(self.animation_count>=len(self.imgs)):
             self.animation_count=0
-        win.blit(self.img,(self.x, self.y))
+        win.blit(self.img,(self.x-self.enemySize[0]//2, self.y-self.enemySize[1]//2))
         self.move()
 
     def collide(self, X, Y):
@@ -43,7 +46,24 @@ class Enemy:
         Moves enemies following the path and do nothing else
         returns: none
         """
-        pass
+        speed=2
+
+        if(self.path_pos<len(self.path)):
+            if(self.x<(self.path[self.path_pos])[0]):
+                self.x+=speed
+            elif(self.x>(self.path[self.path_pos])[0]):
+                self.x-=speed
+            if(self.y<(self.path[self.path_pos])[1]):
+                self.y+=speed
+            elif(self.y>(self.path[self.path_pos])[1]):
+                self.y-=speed
+            z=(self.x-(self.path[self.path_pos])[0], self.y-(self.path[self.path_pos][1]))
+            # print(self.x, self.y)
+            # print((self.path[self.path_pos])[0], (self.path[self.path_pos])[1])
+            
+            if(abs(z[0])//speed, abs(z[1])//speed)==(0,0):
+                self.path_pos+=1
+        
 
     def hit(self):
         """
