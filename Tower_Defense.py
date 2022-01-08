@@ -3,8 +3,8 @@ import os #importing os to set the path to our assets
 
 class Game:
     def __init__(self):
-        self.width=1000
-        self.height=800
+        self.width=900
+        self.height=674
         self.win=pygame.display.set_mode((self.width, self.height))
         self.enemies=[]
         self.towers=[]
@@ -12,6 +12,8 @@ class Game:
         self.money=100
         # The line below will make our backgroud image to be loaded and store it in the object
         self.bg=pygame.image.load(os.path.join("assets", "bg.png")) #remember to keep the background image file name same as the one laoded
+
+        # self.clicks=[]
 
     def run(self):
         run=True
@@ -25,10 +27,22 @@ class Game:
             for event in pygame.event.get():
                 if(event.type == pygame.QUIT):
                     run=False
-        
+
+                pos=pygame.mouse.get_pos()
+                if(event.type==pygame.MOUSEBUTTONDOWN):
+                    pass
+
+            self.draw() #calling our draw method in the run method
+
         # to end the program 
         pygame.quit()
     
     def draw(self):
         self.win.blit(self.bg, (0,0))
+        # used it to know the position of the paths
+        # for p in self.clicks:
+        #     pygame.draw.circle(self.win, (255,0,0), (p[0],p[1]), 5)
         pygame.display.update()
+
+G_Obj=Game()
+G_Obj.run()
