@@ -1,13 +1,15 @@
 import pygame # importing the pygame module
 import os #importing os to set the path to our assets
 from enemy.mosquito import Mosquito
+from enemy.rick import Rick
+from enemy.giant import Giant
 
 class Game:
     def __init__(self):
         self.width=900
         self.height=674
         self.win=pygame.display.set_mode((self.width, self.height))
-        self.enemies=[Mosquito()]
+        self.enemies=[Giant()]
         self.towers=[]
         self.lives=10
         self.money=100

@@ -2,7 +2,6 @@ from os import path
 import pygame
 
 class Enemy:
-    imgs=[]
 
     def __init__(self):
         self.width=40
@@ -15,6 +14,8 @@ class Enemy:
         self.y=self.path[0][1]
         self.img=None
         self.path_pos=1
+        self.imgs=[]
+        self.flipped=False
 
     def draw(self, win):
         """
@@ -57,7 +58,17 @@ class Enemy:
                 self.y+=speed
             elif(self.y>(self.path[self.path_pos])[1]):
                 self.y-=speed
-            z=(self.x-(self.path[self.path_pos])[0], self.y-(self.path[self.path_pos][1]))
+            z=(self.path[self.path_pos][0]-self.x, self.path[self.path_pos][1]-self.y)
+
+            if(z[0]<0 and not(self.flipped)):
+                self.flipped=True
+                for count, img in enumerate(self.imgs):
+                    self.imgs[count]=pygame.transform.flip(img, True, False)
+            elif(z[0]>0 and self.flipped):
+                self.flipped=False
+                for count, img in enumerate(self.imgs):
+                    self.imgs[count]=pygame.transform.flip(img, True, False)
+
             # print(self.x, self.y)
             # print((self.path[self.path_pos])[0], (self.path[self.path_pos])[1])
             
