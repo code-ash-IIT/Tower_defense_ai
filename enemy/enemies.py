@@ -47,17 +47,17 @@ class Enemy:
         Moves enemies following the path and do nothing else
         returns: none
         """
-        speed=2
+        # speed=2
 
         if(self.path_pos<len(self.path)):
             if(self.x<(self.path[self.path_pos])[0]):
-                self.x+=speed
+                self.x+=self.speed
             elif(self.x>(self.path[self.path_pos])[0]):
-                self.x-=speed
+                self.x-=self.speed
             if(self.y<(self.path[self.path_pos])[1]):
-                self.y+=speed
+                self.y+=self.speed
             elif(self.y>(self.path[self.path_pos])[1]):
-                self.y-=speed
+                self.y-=self.speed
             z=(self.path[self.path_pos][0]-self.x, self.path[self.path_pos][1]-self.y)
 
             if(z[0]<0 and not(self.flipped)):
@@ -72,7 +72,7 @@ class Enemy:
             # print(self.x, self.y)
             # print((self.path[self.path_pos])[0], (self.path[self.path_pos])[1])
             
-            if(abs(z[0])//speed, abs(z[1])//speed)==(0,0):
+            if(abs(z[0])//self.speed, abs(z[1])//self.speed)==(0,0):
                 self.path_pos+=1
         
 

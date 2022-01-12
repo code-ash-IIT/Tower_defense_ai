@@ -9,7 +9,7 @@ class Game:
         self.width=900
         self.height=674
         self.win=pygame.display.set_mode((self.width, self.height))
-        self.enemies=[Giant()]
+        self.enemies=[Mosquito(), Rick(), Giant()]
         self.towers=[]
         self.lives=10
         self.money=100
