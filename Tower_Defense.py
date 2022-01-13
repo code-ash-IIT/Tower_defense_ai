@@ -3,19 +3,19 @@ import os #importing os to set the path to our assets
 from enemy.mosquito import Mosquito
 from enemy.rick import Rick
 from enemy.giant import Giant
+from enemy.baby_zombie import Baby_zombie
 
 class Game:
     def __init__(self):
         self.width=900
         self.height=674
         self.win=pygame.display.set_mode((self.width, self.height))
-        self.enemies=[Mosquito(), Rick(), Giant()]
+        self.enemies=[Mosquito(), Rick(), Giant(), Baby_zombie()]
         self.towers=[]
         self.lives=10
         self.money=100
         # The line below will make our backgroud image to be loaded and store it in the object
         self.bg=pygame.image.load(os.path.join("assets", "bg.png")) #remember to keep the background image file name same as the one laoded
-
         # self.clicks=[]
 
     def run(self):
