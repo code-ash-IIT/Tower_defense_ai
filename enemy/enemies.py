@@ -61,7 +61,7 @@ class Enemy:
                 self.y-=self.speed
             z=(self.path[self.path_pos][0]-self.x, self.path[self.path_pos][1]-self.y)
 
-            if(z[0]<0 and not(self.flipped)):
+            if(z[0]<=0 and not(self.flipped)):
                 self.flipped=True
                 for count, img in enumerate(self.imgs):
                     self.imgs[count]=pygame.transform.flip(img, True, False)
