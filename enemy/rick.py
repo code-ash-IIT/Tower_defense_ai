@@ -9,6 +9,6 @@ class Rick(Enemy):
         
     def __init__(self):
         super().__init__()
-        self.imgs=imgs
+        self.imgs=imgs[:]
         self.speed=1
         self.enemySize=enemySize

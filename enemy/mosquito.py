@@ -9,6 +9,6 @@ class Mosquito(Enemy):
 
     def __init__(self):
         super().__init__()
-        self.imgs=imgs
+        self.imgs=imgs[:]
         self.enemySize=enemySize
         self.speed=1
