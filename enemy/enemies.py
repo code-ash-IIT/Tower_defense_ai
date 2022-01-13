@@ -16,6 +16,7 @@ class Enemy:
         self.path_pos=1
         self.imgs=[]
         self.flipped=False
+        self.completed=False
 
     def draw(self, win):
         """
@@ -68,12 +69,13 @@ class Enemy:
                 self.flipped=False
                 for count, img in enumerate(self.imgs):
                     self.imgs[count]=pygame.transform.flip(img, True, False)
-
+            if(abs(z[0])//self.speed, abs(z[1])//self.speed)==(0,0):
+                self.path_pos+=1
+        else:
+            self.completed=True
             # print(self.x, self.y)
             # print((self.path[self.path_pos])[0], (self.path[self.path_pos])[1])
             
-            if(abs(z[0])//self.speed, abs(z[1])//self.speed)==(0,0):
-                self.path_pos+=1
         
 
     def hit(self):

@@ -44,12 +44,13 @@ class Game:
         self.win.blit(self.bg, (0,0))
         # used it to know the position of the paths
         # for p in self.clicks:
-        #     pygame.draw.circle(self.win, (255,0,0), (p[0],p[1]), 5)
-
+        # pygame.draw.circle(self.win, (255,0,0), (p[0],p[1]), 5)
         # draw enemies
 
         for en in self.enemies:
             en.draw(self.win)
+            if(en.completed):
+                self.enemies.remove(en)
 
         pygame.display.update()
 
