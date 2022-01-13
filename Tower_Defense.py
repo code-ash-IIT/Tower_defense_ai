@@ -1,4 +1,6 @@
 import pygame # importing the pygame module
+import time
+import random
 import os #importing os to set the path to our assets
 from enemy.mosquito import Mosquito
 from enemy.rick import Rick
@@ -10,13 +12,14 @@ class Game:
         self.width=900
         self.height=674
         self.win=pygame.display.set_mode((self.width, self.height))
-        self.enemies=[Mosquito(), Rick(), Giant(), Baby_zombie()]
+        self.enemies=[Mosquito()]
         self.towers=[]
         self.lives=10
         self.money=100
         # The line below will make our backgroud image to be loaded and store it in the object
         self.bg=pygame.image.load(os.path.join("assets", "bg.png")) #remember to keep the background image file name same as the one laoded
         # self.clicks=[]
+        self.timer=time.time()
 
     def run(self):
         run=True
@@ -24,6 +27,10 @@ class Game:
         clock = pygame.time.Clock()
         # we run this loop which means our game is in continuous execution
         while(run):
+            if(time.time()-self.timer>=random.randrange(1, 10)/2):
+                self.timer=time.time()
+                self.enemies.append(random.choice([Mosquito(), Rick(), Giant(), Baby_zombie()]))
+            
             # setting our FPS to 60 FPS
             clock.tick(60)
             # we are fetchin the any event of importance 
