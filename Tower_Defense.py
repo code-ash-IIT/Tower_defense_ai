@@ -6,6 +6,7 @@ from enemy.mosquito import Mosquito
 from enemy.rick import Rick
 from enemy.giant import Giant
 from enemy.baby_zombie import Baby_zombie
+from towers.archerTower import ArcherTower, Canon
 
 class Game:
     def __init__(self):
@@ -13,7 +14,7 @@ class Game:
         self.height=674
         self.win=pygame.display.set_mode((self.width, self.height))
         self.enemies=[Mosquito()]
-        self.towers=[]
+        self.towers=[ArcherTower(310, 320), Canon(550, 400)]   # in the brackets are the positions(x, y)
         self.lives=10
         self.money=100
         # The line below will make our backgroud image to be loaded and store it in the object
@@ -54,10 +55,19 @@ class Game:
         # pygame.draw.circle(self.win, (255,0,0), (p[0],p[1]), 5)
         # draw enemies
 
+        # draw enemies
         for en in self.enemies:
             en.draw(self.win)
             if(en.completed):
                 self.enemies.remove(en)
+
+        # draw towers
+        for tw in self.towers:
+            tw.draw(self.win)
+
+        # loop through towers
+        for tw in self.towers:
+            tw.attack(self.enemies)
 
         pygame.display.update()
 
