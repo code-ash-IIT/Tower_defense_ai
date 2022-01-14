@@ -19,8 +19,8 @@ for x in range(1, 2):
 class ArcherTower(Tower):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.tower_imgs = tower_imgs
-        self.archer_imgs = archer_imgs
+        self.tower_imgs = tower_imgs[:]
+        self.archer_imgs = archer_imgs[:]
         self.tower_count = 0
         self.range = 100
         self.inRange = False
@@ -82,7 +82,7 @@ class ArcherTower(Tower):
             # shoots after every 0.5 seconds
             if time.time() - self.timer >= 0.5:
                 self.timer = time.time()
-                if first_enemy.hit():
+                if first_enemy.hit(self.damage):
                     enemies.remove(first_enemy)
 
             # checking if we need to flip the image of the archer
@@ -104,8 +104,8 @@ canon_imgs.append(pygame.transform.scale(
 class Canon(Tower):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.tower_imgs = canon_imgs
-        self.canon_imgs = canon_imgs
+        self.tower_imgs = canon_imgs[:]
+        self.canon_imgs = canon_imgs[:]
         self.tower_count = 0
         self.range = 100
         self.inRange = False
@@ -151,7 +151,7 @@ class Canon(Tower):
             # shoots after every 0.5 seconds
             if time.time() - self.timer >= 0.5:
                 self.timer = time.time()
-                if first_enemy.hit():
+                if first_enemy.hit(self.damage):
                     enemies.remove(first_enemy)
 
             if first_enemy.x < self.x and not self.left:

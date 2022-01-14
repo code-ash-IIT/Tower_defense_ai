@@ -85,11 +85,11 @@ class Enemy:
             
         
 
-    def hit(self):
+    def hit(self, damage):
         """
         returns if an enemy has dies and removes health when called
         :return bool
         """
-        self.health-=1
+        self.health-=damage
         if self.health<=0:
             return True
