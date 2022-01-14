@@ -28,7 +28,7 @@ class Game:
         clock = pygame.time.Clock()
         # we run this loop which means our game is in continuous execution
         while(run):
-            if(time.time()-self.timer>=random.randrange(1, 10)):
+            if(time.time()-self.timer>=random.randrange(1, 15)):
                 self.timer=time.time()
                 self.enemies.append(random.choice([Mosquito(), Rick(), Giant(), Baby_zombie()]))
             
@@ -60,7 +60,7 @@ class Game:
             en.draw(self.win)
             if(en.completed):
                 self.enemies.remove(en)
-
+                
         # draw towers
         for tw in self.towers:
             tw.draw(self.win)

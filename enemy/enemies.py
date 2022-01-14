@@ -7,7 +7,7 @@ class Enemy:
         self.width=40
         self.height=40
         self.animation_count=0
-        self.health=1
+        self.health=6
         self.vel=3
         self.path=[(5, 318), (53, 346), (113, 401), (172, 414), (227, 366), (276, 284), (320, 284), (383, 292), (434, 247), (492, 214), (550, 206), (611, 216), (668, 246), (706, 303), (724, 354), (717, 375), (682, 428), (638, 455), (589, 471), (540, 472), (487, 463), (496, 419), (507, 378), (531, 347)]
         self.x=self.path[0][0]
@@ -24,12 +24,19 @@ class Enemy:
         :param win: surface
         :return: None
         """
-        self.img=self.imgs[self.animation_count]
+        self.img=self.imgs[self.animation_count//10]
         self.animation_count+=1
-        if(self.animation_count>=len(self.imgs)):
+        if(self.animation_count>=len(self.imgs)*10):
             self.animation_count=0
         win.blit(self.img,(self.x-self.enemySize[0]//2, self.y-self.enemySize[1]//2))
+        self.draw_health_bar(win)
         self.move()
+        
+    def draw_health_bar(self, win):
+        length=50
+        health_bar=round(self.health/self.max_health*length)
+        pygame.draw.rect(win, (255, 0, 20), (self.x-self.enemySize[0]//2, self.y-(self.enemySize[1]+15)//2,length, 7) ,0)
+        pygame.draw.rect(win, (20, 255, 20), (self.x-self.enemySize[0]//2, self.y-(self.enemySize[1]+15)//2,health_bar, 7) ,0)
 
     def collide(self, X, Y):
         """
