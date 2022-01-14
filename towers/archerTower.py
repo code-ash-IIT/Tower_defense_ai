@@ -82,7 +82,7 @@ class ArcherTower(Tower):
             # shoots after every 0.5 seconds
             if time.time() - self.timer >= 0.5:
                 self.timer = time.time()
-                if first_enemy.hit():
+                if first_enemy.hit(self.damage):
                     enemies.remove(first_enemy)
 
             # checking if we need to flip the image of the archer
