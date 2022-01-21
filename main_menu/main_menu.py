@@ -1,4 +1,4 @@
-from game import Game
+from Tower_defense import Game
 import pygame
 import os
 
