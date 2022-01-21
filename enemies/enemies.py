@@ -171,69 +171,69 @@ class Enemy:
         if self.animation_count >= len(self.imgs)*10:
             self.animation_count = 0
 
-        x1, y1 = self.path[self.path_pos]
-        # x1 = x1 + 75
-        if self.path_pos + 1 >= len(self.path):
-            x2, y2 = (500, 310)
-        else:
-            x2, y2 = self.path[self.path_pos+1]
+        # x1, y1 = self.path[self.path_pos]
+        # # x1 = x1 + 75
+        # if self.path_pos + 1 >= len(self.path):
+        #     x2, y2 = (500, 310)
+        # else:
+        #     x2, y2 = self.path[self.path_pos+1]
 
-        # x2 = x2
+        # # x2 = x2
 
-        dirn = ((x2-x1), (y2-y1))
-        length = math.sqrt((dirn[0])**2 + (dirn[1])**2)
-        dirn = (dirn[0]/length * self.speed_increase, dirn[1]/length * self.speed_increase)
+        # dirn = ((x2-x1), (y2-y1))
+        # length = math.sqrt((dirn[0])**2 + (dirn[1])**2)
+        # dirn = (dirn[0]/length * self.speed_increase, dirn[1]/length * self.speed_increase)
 
-        if dirn[0] < 0 and not(self.flipped):
-            self.flipped = True
-            for x, img in enumerate(self.imgs):
-                self.imgs[x] = pygame.transform.flip(img, True, False)
+        # if dirn[0] < 0 and not(self.flipped):
+        #     self.flipped = True
+        #     for x, img in enumerate(self.imgs):
+        #         self.imgs[x] = pygame.transform.flip(img, True, False)
 
-        move_x, move_y = ((self.x + dirn[0]), (self.y + dirn[1]))
+        # move_x, move_y = ((self.x + dirn[0]), (self.y + dirn[1]))
 
-        self.x = move_x
-        self.y = move_y
+        # self.x = move_x
+        # self.y = move_y
 
-        # Go to next point
-        if dirn[0] >= 0: # moving right
-            if dirn[1] >= 0: # moving down
-                if self.x >= x2 and self.y >= y2:
-                    self.path_pos += 1
-            else:
-                if self.x >= x2 and self.y <= y2:
-                    self.path_pos += 1
-        else: # moving left
-            if dirn[1] >= 0:  # moving down
-                if self.x <= x2 and self.y >= y2:
-                    self.path_pos += 1
-            else:
-                if self.x <= x2 and self.y >= y2:
-                    self.path_pos += 1
+        # # Go to next point
+        # if dirn[0] >= 0: # moving right
+        #     if dirn[1] >= 0: # moving down
+        #         if self.x >= x2 and self.y >= y2:
+        #             self.path_pos += 1
+        #     else:
+        #         if self.x >= x2 and self.y <= y2:
+        #             self.path_pos += 1
+        # else: # moving left
+        #     if dirn[1] >= 0:  # moving down
+        #         if self.x <= x2 and self.y >= y2:
+        #             self.path_pos += 1
+        #     else:
+        #         if self.x <= x2 and self.y >= y2:
+        #             self.path_pos += 1
         # speed=2
 
-        # if(self.path_pos<len(self.path)):
-        #     if(self.x<(self.path[self.path_pos])[0]):
-        #         self.x+=self.speed
-        #     elif(self.x>(self.path[self.path_pos])[0]):
-        #         self.x-=self.speed
-        #     if(self.y<(self.path[self.path_pos])[1]):
-        #         self.y+=self.speed
-        #     elif(self.y>(self.path[self.path_pos])[1]):
-        #         self.y-=self.speed
-        #     z=(self.path[self.path_pos][0]-self.x, self.path[self.path_pos][1]-self.y)
+        if(self.path_pos<len(self.path)):
+            if(self.x<(self.path[self.path_pos])[0]):
+                self.x+=self.speed
+            elif(self.x>(self.path[self.path_pos])[0]):
+                self.x-=self.speed
+            if(self.y<(self.path[self.path_pos])[1]):
+                self.y+=self.speed
+            elif(self.y>(self.path[self.path_pos])[1]):
+                self.y-=self.speed
+            z=(self.path[self.path_pos][0]-self.x, self.path[self.path_pos][1]-self.y)
 
-        #     if(z[0]<=0 and not(self.flipped)):
-        #         self.flipped=True
-        #         for count, img in enumerate(self.imgs):
-        #             self.imgs[count]=pygame.transform.flip(img, True, False)
-        #     elif(z[0]>0 and self.flipped):
-        #         self.flipped=False
-        #         for count, img in enumerate(self.imgs):
-        #             self.imgs[count]=pygame.transform.flip(img, True, False)
-        #     if(abs(z[0])//self.speed, abs(z[1])//self.speed)==(0,0):
-        #         self.path_pos+=1
-        # else:
-        #     self.completed=True
+            if(z[0]<=0 and not(self.flipped)):
+                self.flipped=True
+                for count, img in enumerate(self.imgs):
+                    self.imgs[count]=pygame.transform.flip(img, True, False)
+            elif(z[0]>0 and self.flipped):
+                self.flipped=False
+                for count, img in enumerate(self.imgs):
+                    self.imgs[count]=pygame.transform.flip(img, True, False)
+            if(abs(z[0])//self.speed, abs(z[1])//self.speed)==(0,0):
+                self.path_pos+=1
+        else:
+            self.completed=True
         #     # print(self.x, self.y)
         #     # print((self.path[self.path_pos])[0], (self.path[self.path_pos])[1])
 
