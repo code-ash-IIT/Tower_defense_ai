@@ -2,6 +2,7 @@ import pygame
 from .tower import Tower
 import os
 import math
+import time
 from menu.menu import Menu
 
 
@@ -41,6 +42,8 @@ class ArcherTowerLong(Tower):
 
         self.menu = Menu(self, self.x, self.y, menu_bg, [2000, 5000,"MAX"])
         self.menu.add_btn(upgrade_btn, "Upgrade")
+
+        self.timer = time.time()
 
     def get_upgrade_cost(self):
         """
@@ -93,19 +96,27 @@ class ArcherTowerLong(Tower):
             x = enemy.x
             y = enemy.y
 
-            dis = math.sqrt((self.x - enemy.img.get_width()/2 - x)**2 + (self.y -enemy.img.get_height()/2 - y)**2)
+            dis = math.sqrt((self.x - x)**2 + (self.y  - y)**2)
             if dis < self.range:
                 self.inRange = True
                 enemy_closest.append(enemy)
 
-        enemy_closest.sort(key=lambda x: x.path_pos)
-        enemy_closest = enemy_closest[::-1]
+        enemy_closest.sort(key=lambda x: x.x)
+        # enemy_closest = enemy_closest[::-1]
         if len(enemy_closest) > 0:
             first_enemy = enemy_closest[0]
-            if self.archer_count == 50:
-                if first_enemy.hit(self.damage) == True:
+
+            # shoots after every 0.5 seconds
+            if time.time() - self.timer >= 0.5:
+                self.timer = time.time()
+                if first_enemy.hit(self.damage):
                     money = first_enemy.money * 2
                     enemies.remove(first_enemy)
+
+            # if self.archer_count == 50:
+            #     if first_enemy.hit(self.damage) == True:
+            #         money = first_enemy.money * 2
+            #         enemies.remove(first_enemy)
 
             if first_enemy.x > self.x and not(self.left):
                 self.left = True
