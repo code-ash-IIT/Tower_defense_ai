@@ -1,164 +1,154 @@
-import os
 import pygame
-import math
-import time
 from .tower import Tower
+import os
+import math
+from menu.menu import Menu
+
+
+menu_bg = pygame.transform.scale(pygame.image.load(os.path.join("assets", "menu.png")).convert_alpha(), (120, 70))
+upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("assets", "upgrade.png")).convert_alpha(), (50, 50))
+
+
+tower_imgs1 = []
+archer_imgs1 = []
+# load archer tower images
+for x in range(1,4):
+    tower_imgs1.append(pygame.transform.scale(
+        pygame.image.load(os.path.join("assets/archer_towers/tower","tower_"+ str(x) + ".png")).convert_alpha(),
+        (90, 90)))
+
+# load archer images
+for x in range(1,2):
+    archer_imgs1.append(
+        pygame.image.load(os.path.join("assets/archer_towers/tower_top","tower_top_"+ str(x) + ".png")).convert_alpha())
+
+
+class ArcherTowerLong(Tower):
+    def __init__(self, x,y):
+        super().__init__(x, y)
+        self.tower_imgs = tower_imgs1[:]
+        self.archer_imgs = archer_imgs1[:]
+        self.archer_count = 0
+        self.range = 200
+        self.original_range = self.range
+        self.inRange = False
+        self.left = True
+        self.damage = 1
+        self.original_damage = self.damage
+        self.width = self.height = 90
+        self.moving = False
+        self.name = "archer"
+
+        self.menu = Menu(self, self.x, self.y, menu_bg, [2000, 5000,"MAX"])
+        self.menu.add_btn(upgrade_btn, "Upgrade")
+
+    def get_upgrade_cost(self):
+        """
+        gets the upgrade cost
+        :return: int
+        """
+        return self.menu.get_item_cost()
+
+    def draw(self, win):
+        """
+        draw the arhcer tower and animated archer
+        :param win: surface
+        :return: int
+        """
+        super().draw_radius(win)
+        super().draw(win)
+
+        if self.inRange and not self.moving:
+            self.archer_count += 1
+            if self.archer_count >= len(self.archer_imgs) * 10:
+                self.archer_count = 0
+        else:
+            self.archer_count = 0
+
+        archer = self.archer_imgs[self.archer_count // 10]
+        if self.left == True:
+            add = -25
+        else:
+            add = -archer.get_width() + 10
+        win.blit(archer, ((self.x + add), (self.y - archer.get_height() - 25)))
+
+    def change_range(self, r):
+        """
+        change range of archer tower
+        :param r: int
+        :return: None
+        """
+        self.range = r
+
+    def attack(self, enemies):
+        """
+        attacks an enemy in the enemy list, modifies the list
+        :param enemies: list of enemies
+        :return: None
+        """
+        money = 0
+        self.inRange = False
+        enemy_closest = []
+        for enemy in enemies:
+            x = enemy.x
+            y = enemy.y
+
+            dis = math.sqrt((self.x - enemy.img.get_width()/2 - x)**2 + (self.y -enemy.img.get_height()/2 - y)**2)
+            if dis < self.range:
+                self.inRange = True
+                enemy_closest.append(enemy)
+
+        enemy_closest.sort(key=lambda x: x.path_pos)
+        enemy_closest = enemy_closest[::-1]
+        if len(enemy_closest) > 0:
+            first_enemy = enemy_closest[0]
+            if self.archer_count == 50:
+                if first_enemy.hit(self.damage) == True:
+                    money = first_enemy.money * 2
+                    enemies.remove(first_enemy)
+
+            if first_enemy.x > self.x and not(self.left):
+                self.left = True
+                for x, img in enumerate(self.archer_imgs):
+                    self.archer_imgs[x] = pygame.transform.flip(img, True, False)
+            elif self.left and first_enemy.x < self.x:
+                self.left = False
+                for x, img in enumerate(self.archer_imgs):
+                    self.archer_imgs[x] = pygame.transform.flip(img, True, False)
+
+        return money
+
 
 tower_imgs = []
 archer_imgs = []
-for x in range(1, 4):
+# load archer tower images
+for x in range(1,4):
     tower_imgs.append(pygame.transform.scale(
-        pygame.image.load(os.path.join("assets/archer_towers/tower/tower_" + str(x) + ".png")), (64, 64)))
+        pygame.image.load(os.path.join("assets/archer_towers/tower","tower_"+ str(x) + ".png")),
+        (90, 90)))
 
-for x in range(1, 2):
-    archer_imgs.append(pygame.transform.scale(
-        pygame.image.load(os.path.join("assets/archer_towers/tower_top/tower_top_" + str(x) + ".png")),
-        (40, 40)))
+# load archer images
+for x in range(1,2):
+    archer_imgs.append(
+        pygame.image.load(os.path.join("assets/archer_towers/tower_top","tower_top_"+ str(x) + ".png")))
 
 
-class ArcherTower(Tower):
-    def __init__(self, x, y):
+class ArcherTowerShort(ArcherTowerLong):
+    def __init__(self, x,y):
         super().__init__(x, y)
         self.tower_imgs = tower_imgs[:]
         self.archer_imgs = archer_imgs[:]
-        self.tower_count = 0
-        self.range = 100
-        self.inRange = False
         self.archer_count = 0
+        self.range = 120
+        self.original_range = self.range
+        self.inRange = False
         self.left = True
-        self.timer = time.time()
-        self.damage=1
+        self.damage = 2
+        self.original_damage = self.damage
 
-    def draw(self, win):
-        # draw range circle (drawn first so that it is present below the archer tower)
-        surface = pygame.Surface((self.range * 2, self.range * 2), pygame.SRCALPHA, 32)
-        pygame.draw.circle(surface, (0, 150, 230, 70), (self.range, self.range), self.range, 0)
-        win.blit(surface, (self.x - self.range, self.y - self.range))
-
-        # draws tower
-        super().draw(win)
-
-        if self.archer_count >= len(self.archer_imgs) * 30:
-            self.archer_count = 0
-
-        # incase if we had multiple images we the animation(of archer) would only be seen when the enemy was in range
-        if self.inRange:
-            archer = self.archer_imgs[self.archer_count // 30]
-            win.blit(archer, ((self.x + self.width / 2) - 20, (self.y - archer.get_height() - 20)))
-            self.archer_count += 1
-        else:
-            self.archer_count = 0
-            archer = self.archer_imgs[self.archer_count // 30]
-            win.blit(archer, ((self.x + self.width / 2) - 20, (self.y - archer.get_height() - 20)))
-
-    def change_range(self, r):
-        """
-        change range of archer tower
-        :param r: int
-        :return: None
-        """
-        self.range = r
-
-    def attack(self, enemies):
-
-        # attacks enemy in the enemy list, modify list
-        self.inRange = False
-        enemy_closest = []
-        for enemy in enemies:
-            x = enemy.x
-            y = enemy.y
-            dist = math.sqrt((self.x - x) ** 2 + (self.y - y) ** 2)
-            if dist < self.range:
-                self.inRange = True
-                enemy_closest.append(enemy)
-
-        # sort the enemies according to distance from the archer tower
-        enemy_closest.sort(key=lambda x: x.x)
-
-        # check if any enemy is near the range of tower
-        if len(enemy_closest) > 0:
-            first_enemy = enemy_closest[0]
-
-            # shoots after every 0.5 seconds
-            if time.time() - self.timer >= 0.5:
-                self.timer = time.time()
-                if first_enemy.hit(self.damage):
-                    enemies.remove(first_enemy)
-
-            # checking if we need to flip the image of the archer
-            if first_enemy.x < self.x and not self.left:
-                self.left = True
-                for x, img in enumerate(self.archer_imgs):
-                    self.archer_imgs[x] = pygame.transform.flip(img, True, False)
-            elif self.left and first_enemy.x > self.x:
-                self.left = False
-                for x, img in enumerate(self.archer_imgs):
-                    self.archer_imgs[x] = pygame.transform.flip(img, True, False)
+        self.menu = Menu(self, self.x, self.y, menu_bg, [2500, 5500, "MAX"])
+        self.menu.add_btn(upgrade_btn, "Upgrade")
+        self.name = "archer2"
 
 
-canon_imgs = []
-canon_imgs.append(pygame.transform.scale(
-    pygame.image.load(os.path.join("assets/archer_towers/canon/canon.png")), (50, 50)))
 
-
-class Canon(Tower):
-    def __init__(self, x, y):
-        super().__init__(x, y)
-        self.tower_imgs = canon_imgs[:]
-        self.canon_imgs = canon_imgs[:]
-        self.tower_count = 0
-        self.range = 100
-        self.inRange = False
-        self.archer_count = 0
-        self.left = True
-        self.timer = time.time()
-        self.damage=1.5
-
-    def draw(self, win):
-        # draw range circle (drawn first so that it is present below the archer tower)
-        surface = pygame.Surface((self.range * 2, self.range * 2), pygame.SRCALPHA, 32)
-        pygame.draw.circle(surface, (0, 150, 230, 70), (self.range, self.range), self.range, 0)
-        win.blit(surface, (self.x - self.range, self.y - self.range))
-
-        super().draw(win)
-
-    def change_range(self, r):
-        """
-        change range of archer tower
-        :param r: int
-        :return: None
-        """
-        self.range = r
-
-    def attack(self, enemies):
-        # attacks enemy in the enemy list, modify list
-        self.inRange = False
-        enemy_closest = []
-        for enemy in enemies:
-            x = enemy.x
-            y = enemy.y
-            dist = math.sqrt((self.x - x) ** 2 + (self.y - y) ** 2)
-            if dist < self.range:
-                self.inRange = True
-                enemy_closest.append(enemy)
-
-        # sort the enemies according to distance from the archer tower
-        enemy_closest.sort(key=lambda x: x.x)
-
-        # check if any enemy is near the range of tower
-        if len(enemy_closest) > 0:
-            first_enemy = enemy_closest[0]
-            # shoots after every 0.5 seconds
-            if time.time() - self.timer >= 0.5:
-                self.timer = time.time()
-                if first_enemy.hit(self.damage):
-                    enemies.remove(first_enemy)
-
-            if first_enemy.x < self.x and not self.left:
-                self.left = True
-                for x, img in enumerate(self.canon_imgs):
-                    self.canon_imgs[x] = pygame.transform.flip(img, True, False)
-            elif self.left and first_enemy.x > self.x:
-                self.left = False
-                for x, img in enumerate(self.canon_imgs):
-                    self.canon_imgs[x] = pygame.transform.flip(img, True, False)
