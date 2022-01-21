@@ -210,7 +210,7 @@ class Game:
                 to_del = []
                 for en in self.enemys:
                     en.move()
-                    if en.x == 531 and en.y == 347:
+                    if en.x == 531 and en.y == 348:
                         to_del.append(en)
 
                 # delete all enemies off the screen
