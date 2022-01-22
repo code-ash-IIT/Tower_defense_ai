@@ -5,3 +5,4 @@
 3. Make required changes
 4. Push the changes to your forked repo
 5. Make a pull request.
+6. Do not merge.
