@@ -4,7 +4,7 @@ from enemies.mosquito import Scorpion
 from enemies.club import Club
 from enemies.wizard import Wizard
 from enemies.zombie import Zombie
-from towers.archerTower import ArcherTowerLong, ArcherTowerShort
+from towers.archerTower import ArcherTower, ArcherTowerShort
 from towers.supportTower import DamageTower, RangeTower
 from menu.menu import VerticalMenu, PlayPauseButton
 import time
@@ -312,7 +312,7 @@ class Game:
     def add_tower(self, name):
         x, y = pygame.mouse.get_pos()
         name_list = ["buy_archer", "buy_archer_2", "buy_damage", "buy_range"]
-        object_list = [ArcherTowerLong(x,y), ArcherTowerShort(x,y), DamageTower(x,y), RangeTower(x,y)]
+        object_list = [ArcherTower(x,y), ArcherTowerShort(x,y), DamageTower(x,y), RangeTower(x,y)]
 
         try:
             obj = object_list[name_list.index(name)]

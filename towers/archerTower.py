@@ -24,7 +24,7 @@ for x in range(1,2):
         pygame.image.load(os.path.join("assets/archer_towers/tower_top","tower_top_"+ str(x) + ".png")).convert_alpha())
 
 
-class ArcherTowerLong(Tower):
+class ArcherTower(Tower):
     def __init__(self, x,y):
         super().__init__(x, y)
         self.tower_imgs = tower_imgs1[:]
@@ -61,19 +61,32 @@ class ArcherTowerLong(Tower):
         super().draw_radius(win)
         super().draw(win)
 
-        if self.inRange and not self.moving:
+        # modified  Abhay
+        if self.archer_count >= len(self.archer_imgs) * 30:
+            self.archer_count = 0
+        if self.inRange:
+            archer = self.archer_imgs[self.archer_count // 30]
+            win.blit(archer, ((self.x + self.width / 2) - 70, (self.y - archer.get_height() - 20)))
             self.archer_count += 1
-            if self.archer_count >= len(self.archer_imgs) * 10:
-                self.archer_count = 0
         else:
             self.archer_count = 0
+            archer = self.archer_imgs[self.archer_count // 30]
+            win.blit(archer, ((self.x + self.width / 2) - 70, (self.y - archer.get_height() - 20)))
 
-        archer = self.archer_imgs[self.archer_count // 10]
-        if self.left == True:
-            add = -25
-        else:
-            add = -archer.get_width() + 10
-        win.blit(archer, ((self.x + add), (self.y - archer.get_height() - 25)))
+        # old code
+        # if self.inRange and not self.moving:
+        #     self.archer_count += 1
+        #     if self.archer_count >= len(self.archer_imgs) * 10:
+        #         self.archer_count = 0
+        # else:
+        #     self.archer_count = 0
+
+        # archer = self.archer_imgs[self.archer_count // 10]
+        # if self.left == True:
+        #     add = -25
+        # else:
+        #     add = -archer.get_width() + 10
+        # win.blit(archer, ((self.x + add), (self.y - archer.get_height() - 25)))
 
     def change_range(self, r):
         """
@@ -118,11 +131,12 @@ class ArcherTowerLong(Tower):
             #         money = first_enemy.money * 2
             #         enemies.remove(first_enemy)
 
-            if first_enemy.x > self.x and not(self.left):
+            # modified Abhay
+            if first_enemy.x < self.x and not(self.left):
                 self.left = True
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img, True, False)
-            elif self.left and first_enemy.x < self.x:
+            elif self.left and first_enemy.x > self.x:
                 self.left = False
                 for x, img in enumerate(self.archer_imgs):
                     self.archer_imgs[x] = pygame.transform.flip(img, True, False)
@@ -132,19 +146,20 @@ class ArcherTowerLong(Tower):
 
 tower_imgs = []
 archer_imgs = []
+# modified images  Abhay
 # load archer tower images
 for x in range(1,4):
     tower_imgs.append(pygame.transform.scale(
-        pygame.image.load(os.path.join("assets/archer_towers/tower","tower_"+ str(x) + ".png")),
-        (90, 90)))
+        pygame.image.load(os.path.join("assets/archer_towers/canon","tower_"+ str(x) + ".png")),
+        (60, 60)))
 
 # load archer images
 for x in range(1,2):
     archer_imgs.append(
-        pygame.image.load(os.path.join("assets/archer_towers/tower_top","tower_top_"+ str(x) + ".png")))
+        pygame.image.load(os.path.join("assets/archer_towers/canon_top","tower_top_"+ str(x) + ".png")))
 
 
-class ArcherTowerShort(ArcherTowerLong):
+class ArcherTowerShort(ArcherTower):
     def __init__(self, x,y):
         super().__init__(x, y)
         self.tower_imgs = tower_imgs[:]
