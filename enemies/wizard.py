@@ -14,7 +14,7 @@ class Wizard(Enemy):
     def __init__(self):
         super().__init__()
         self.name = "wizard"
-        self.money = 3
+        self.money = 30
         self.max_health = 3
         self.speed = 2
         self.enemySize=enemySize

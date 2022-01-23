@@ -9,9 +9,11 @@ class Rick(Enemy):
         
     def __init__(self):
         super().__init__()
+        self.name = "rick"
+        self.money = 20
         self.imgs=imgs[:]
         self.speed=1.25
         self.enemySize=enemySize
         self.max_health=3.25
         self.health=self.max_health
-        
+     
