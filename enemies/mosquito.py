@@ -10,12 +10,14 @@ for x in range(2):
         (60, 60)))
 
 
-class Scorpion(Enemy):
+class Mosquito(Enemy):
     def __init__(self):
         super().__init__()
-        self.name = "scorpion"
-        self.money = 1
-        self.max_health = 1
+        self.name = "mosquito"
+        self.money = 10
+        self.enemySize=enemySize
+        self.speed=3.5
+        self.max_health = 2
         self.health = self.max_health
         self.imgs = imgs[:]
 

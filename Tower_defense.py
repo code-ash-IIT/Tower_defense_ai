@@ -1,9 +1,12 @@
 import pygame
 import os
-from enemies.mosquito import Scorpion
+from enemies.mosquito import Mosquito
 from enemies.club import Club
 from enemies.wizard import Wizard
 from enemies.zombie import Zombie
+from enemies.rick import Rick
+from enemies.giant import Giant
+from enemies.baby_zombie import Baby_zombie
 from towers.archerTower import ArcherTower, ArcherTowerShort
 from towers.supportTower import DamageTower, RangeTower
 from menu.menu import VerticalMenu, PlayPauseButton
@@ -39,11 +42,11 @@ pygame.mixer.music.load(os.path.join("assets/sound", "song.ogg"))
 
 # waves are in form
 # frequency of enemies
-# (# scorpions, # wizards, # clubs, # Zombies)
+# (# mosquitos, # wizards, # clubs, # Zombies)
 waves = [
-    [20, 0, 0],
-    [50, 0, 0],
-    [100, 0, 0],
+    [3, 3, 3, 3, 3, 3 ,3],
+    [10, 10, 10],
+    [10, 10, 10],
     [0, 20, 0],
     [0, 50, 0, 1],
     [0, 100, 0],
@@ -96,7 +99,7 @@ class Game:
                 self.pause = True
                 self.playPauseButton.paused = self.pause
         else:
-            wave_enemies = [Wizard(), Scorpion(), Club(), Zombie()] #changed position
+            wave_enemies = [Mosquito(), Baby_zombie(), Rick(),  Giant(), Club(), Zombie(), Wizard()] #changed position
             for x in range(len(self.current_wave)):
                 if self.current_wave[x] != 0:
                     self.enemys.append(wave_enemies[x])
@@ -112,7 +115,7 @@ class Game:
 
             if self.pause == False:
                 # gen monsters
-                if time.time()-self.timer>=random.randrange(1, 15):
+                if time.time()-self.timer>=random.randrange(1, 8):
                     self.timer = time.time()
                     self.gen_enemies()
 
@@ -210,7 +213,7 @@ class Game:
                 to_del = []
                 for en in self.enemys:
                     en.move()
-                    if en.x == 531 and en.y == 348:
+                    if en.completed:
                         to_del.append(en)
 
                 # delete all enemies off the screen

@@ -9,6 +9,8 @@ class Giant(Enemy):
         
     def __init__(self):
         super().__init__()
+        self.name = "giant"
+        self.money = 400
         self.imgs=imgs[:]
         self.speed=1
         self.enemySize=enemySize

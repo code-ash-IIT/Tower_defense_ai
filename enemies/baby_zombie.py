@@ -10,8 +10,10 @@ class Baby_zombie(Enemy):
         
     def __init__(self):
         super().__init__()
+        self.name = "baby_zombie"
+        self.money = 30
         self.imgs=imgs[:]
-        self.speed=2
+        self.speed=0.5
         self.enemySize=enemySize
         self.max_health=4.25
         self.health=self.max_health
