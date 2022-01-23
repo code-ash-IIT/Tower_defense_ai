@@ -12,7 +12,6 @@ class Enemy:
         self.path = [(5, 318), (53, 346), (113, 401), (172, 414), (227, 366), (276, 284), (320, 284), (383, 292), (434, 247), (492, 214), (550, 206), (611, 216), (668, 246), (706, 303), (724, 354), (717, 375), (682, 428), (638, 455), (589, 471), (540, 472), (487, 463), (496, 419), (507, 378), (531, 347)]
         self.x = self.path[0][0]
         self.y = self.path[0][1]
-        # self.img = pygame.image.load(os.path.join("assets/Enemies/8", "wizard0.png")).convert_alpha()
         self.dis = 0
         self.path_pos = 0
         self.move_count = 0
@@ -32,14 +31,8 @@ class Enemy:
         :return: None
         """
         self.img = self.imgs[self.animation_count//15]
-        self.animation_count+=1
-        if(self.animation_count>=len(self.imgs)*15):
-            self.animation_count=0
         win.blit(self.img,(self.x-self.enemySize[0]//2, self.y-self.enemySize[1]//2))
         self.draw_health_bar(win)
-        self.move()
-        # win.blit(self.img, (self.x - self.img.get_width()//2, self.y- self.img.get_height()//2- 35))
-        # self.draw_health_bar(win)
         
 
     def draw_health_bar(self, win):
@@ -53,11 +46,6 @@ class Enemy:
         pygame.draw.rect(win, (255, 0, 20), (self.x-self.enemySize[0]//2, self.y-(self.enemySize[1]+15)//2,length, 7) ,0)
         pygame.draw.rect(win, (20, 255, 20), (self.x-self.enemySize[0]//2, self.y-(self.enemySize[1]+15)//2,health_bar, 7) ,0)
 
-        # move_by = length / self.max_health
-        # health_bar = round(move_by * self.health)
-
-        # pygame.draw.rect(win, (255,0,0), (self.x-30, self.y-75, length, 10), 0)
-        # pygame.draw.rect(win, (0, 255, 0), (self.x-30, self.y - 75, health_bar, 10), 0)
 
     def collide(self, X, Y):
         """
@@ -76,9 +64,9 @@ class Enemy:
         Move enemy
         :return: None
         """
-        self.animation_count += 1
-        if self.animation_count >= len(self.imgs)*10:
-            self.animation_count = 0
+        self.animation_count+=1
+        if(self.animation_count>=len(self.imgs)*15):
+            self.animation_count=0
 
         if(self.path_pos<len(self.path)):
             if(self.x<(self.path[self.path_pos])[0]):
@@ -103,8 +91,6 @@ class Enemy:
                 self.path_pos+=1
         else:
             self.completed=True
-        #     # print(self.x, self.y)
-        #     # print((self.path[self.path_pos])[0], (self.path[self.path_pos])[1])
 
     def hit(self, damage):
         """
