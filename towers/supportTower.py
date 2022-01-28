@@ -5,8 +5,8 @@ import math
 import time
 
 
-range_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("assets/support_towers", "1.png")).convert_alpha(), (90,90)),
-              pygame.transform.scale(pygame.image.load(os.path.join("assets/support_towers", "2.png")).convert_alpha(), (90, 90))]
+range_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("assets/support_towers", "3.png")).convert_alpha(), (90,90)),
+              pygame.transform.scale(pygame.image.load(os.path.join("assets/support_towers", "4.png")).convert_alpha(), (90, 90))]
 
 
 class RangeTower(Tower):
@@ -46,8 +46,8 @@ class RangeTower(Tower):
             tower.range = tower.original_range + round(tower.range * self.effect[self.level -1])
 
 
-damage_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("assets/support_towers", "3.png")).convert_alpha(), (90,90)),
-              pygame.transform.scale(pygame.image.load(os.path.join("assets/support_towers", "4.png")).convert_alpha(), (90,90))]
+damage_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("assets/support_towers", "1.png")).convert_alpha(), (90,90)),
+              pygame.transform.scale(pygame.image.load(os.path.join("assets/support_towers", "2.png")).convert_alpha(), (90,90))]
 
 
 class DamageTower(RangeTower):
