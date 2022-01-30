@@ -17,6 +17,7 @@ SHOW_PATH_BOUNDS = True     #If true will display bounds to enemy path
 # ---------------------------------------------NEED TO BE CHANGED ------------------------------------------
 # Locations where towers may be placed
 TOWER_GRID = [(92, 252), (17, 254), (93, 406), (17, 407), (169, 406), (246, 264), (247, 334), (245, 406), (245, 474), (169, 475), (92, 475), (18, 476), (91, 178), (16, 178), (159, 106), (227, 106), (296, 107), (365, 107), (90, 106), (16, 106), (405, 346), (465, 346), (792, 299), (790, 232), (538, 174), (605, 174), (672, 174), (739, 166), (805, 164), (622, 327), (622, 395), (621, 463), (546, 501), (482, 501), (417, 500), (352, 501), (703, 438), (770, 437), (838, 436), (905, 436), (873, 139), (940, 139), (1010, 139), (1080, 140), (951, 293), (1019, 293), (1088, 295), (952, 362), (1019, 361), (1087, 361), (434, 108), (502, 109), (569, 108), (637, 108), (704, 105), (774, 101), (975, 435), (1044, 434), (1112, 432), (702, 504), (770, 503), (838, 502), (905, 502), (975, 501), (1045, 500), (1112, 500), (620, 531), (14, 39), (88, 38), (157, 39), (227, 38), (295, 39), (363, 41), (431, 39), (499, 42), (564, 42), (634, 41), (703, 37), (772, 34), (871, 72), (939, 72), (937, 6), (869, 6), (244, 542), (169, 543), (92, 542), (17, 542), (352, 567), (418, 566), (482, 566), (545, 566), (703, 570), (770, 570), (833, 568), (905, 568), (976, 567), (1044, 567), (1111, 565), (16, 609), (92, 611), (168, 611), (244, 610), (907, 637), (976, 636), (1043, 635), (1109, 634), (243, 678), (166, 680), (90, 679), (16, 678), (401, 279), (461, 279), (401, 204), (465, 204)]
+# TOWER_GRID = [(161, 352), (309, 336), (357, 224), (789, 313), (766, 428), (562, 416)]
 
 # Number of possible grid locations
 STARTING_POSITIONS = len(TOWER_GRID)
@@ -31,9 +32,9 @@ TRAINING_MODE = True    #If true will uncap framerates  TODO  not sure this is u
 # VISUAL_MODE = False     #Set false to stop rendering
 FPS = 60
 
-#Player
-STARTING_COINS   = 500
-BUYING_THRESHOLD = 200         # the number of coins to trigger the AI to decide where to buy a new tower
+#Player  # CHANGED :]
+STARTING_COINS   = 2000
+BUYING_THRESHOLD = 500         # the number of coins to trigger the AI to decide where to buy a new tower
 
 #Spawn Probabilities
 GLOBAL_SPAWN_PROB_INC = 0.25   # Percent increase spawn chance per level
@@ -47,9 +48,9 @@ SPEED_INCREASE  = 1                     # how much speed is added to enemies whe
 NUMBER_LEVELS_HEALTH_INCREASE = 2       # how many levels before an enemy health increase
 NUMBER_LEVELS_SPEED_INCREASE  = 6       # how many levels before an enemy speed increase
 
-#Window Dimensions
-WIN_WIDTH = 1200
-WIN_HEIGHT = 800
+#Window Dimensions # CHANGED :]
+WIN_WIDTH = 900
+WIN_HEIGHT = 674
 
 #Enemies # CHANGED :]
 ENEMY_TYPES   = [Mosquito, Club, Wizard, Zombie, Wizard, Rick, Giant,Baby_zombie]

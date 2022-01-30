@@ -96,12 +96,17 @@ class MainMenu:
 
                     if self.btn[0] <= x <= self.btn[0] + self.btn[2]:
                         if self.btn[1] <= y <= self.btn[1] + self.btn[3]:
-                            game = Game(self.win)
+                            game = Game(self.win,True, [], None, False, None)
                             game.run()
                             del game
                     if self.ai_b[0] <= x <= self.ai_b[0] + self.ai_b[2]:
                         if self.ai_b[1] <= y <= self.ai_b[1] + self.ai_b[3]:
-                            AIplay(self.win)
+                            if PARALLEL_MODE:
+                                gaAlgo = ParallelGeneticAlgorithm(VISUAL_MODE, READ_FILE, SAVE_TO_DISK, PRINT_GRAPHS, COLLECT_WHOLE_GAME_DATA, COLLECT_INNER_GAME_DATA)
+                            else:
+                                gaAlgo = SerialGeneticAlgorithm(VISUAL_MODE, READ_FILE, SAVE_TO_DISK, PRINT_GRAPHS, COLLECT_WHOLE_GAME_DATA, COLLECT_INNER_GAME_DATA)
+                            gaAlgo.run()
+                            # AIplay(self.win)
                             # AIplay.g_run()
             self.draw()
 

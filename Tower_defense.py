@@ -60,7 +60,13 @@ waves = [
 ]
 
 class Game:
-    def __init__(self, win):
+    def __init__(self, win, visualMode, towers, gameRecord, collectInnerGameData, deepQagent):
+
+        self.visualMode           = visualMode
+        self.gameRecord           = gameRecord
+        self.collectInnerGameData = collectInnerGameData
+        self.innerGameRecords     = []
+        
         self.width = 900
         self.height = 674
         self.win = win
@@ -76,9 +82,9 @@ class Game:
         self.selected_tower = None
         self.menu = VerticalMenu(self.width - side_img.get_width() + 70, 250, side_img)
         self.menu.add_btn(buy_archer, "buy_archer", 500)
-        self.menu.add_btn(buy_archer_2, "buy_archer_2", 750)
-        self.menu.add_btn(buy_damage, "buy_damage", 1000)
-        self.menu.add_btn(buy_range, "buy_range", 1000)
+        self.menu.add_btn(buy_archer_2, "buy_archer_2", 500)
+        self.menu.add_btn(buy_damage, "buy_damage", 500)
+        self.menu.add_btn(buy_range, "buy_range", 500)
         self.moving_object = None
         self.wave = 0
         self.current_wave = waves[self.wave][:]
