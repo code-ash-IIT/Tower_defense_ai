@@ -59,8 +59,25 @@ waves = [
     [200, 100, 200],
 ]
 
+class InnerGameRecord:
+
+    def __init__(self):
+        self.currentScore = 0
+        self.currentLevel = 0
+        self.currentEnemiesKilled = 0
+        self.currentNumberOfEnemies = 0
+        self.currentNumberOfTowers = 0
+        self.died = 0
+        self.typeOfTowerPlaced = 0
+        self.towerX = 0
+        self.towerY = 0
+
+        self.currentTowers = []
+
+
+
 class Game:
-    def __init__(self, win, visualMode, towers, gameRecord, collectInnerGameData, deepQagent):
+    def __init__(self, win, visualMode, towers, gameRecord, collectInnerGameData):
 
         self.visualMode           = visualMode
         self.gameRecord           = gameRecord

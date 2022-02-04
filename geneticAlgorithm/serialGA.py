@@ -14,8 +14,9 @@ from .geneticAlgorithm import GeneticAlgorithm, GameRecord
 
 class SerialGeneticAlgorithm(GeneticAlgorithm):
 
-    def __init__(self, visualMode, readFile, saveToDisk, printGraphs, collectWholeGameData, collectInnerGameData):
+    def __init__(self,win, visualMode, readFile, saveToDisk, printGraphs, collectWholeGameData, collectInnerGameData):
         super().__init__(visualMode, readFile, saveToDisk, printGraphs, collectWholeGameData, collectInnerGameData)
+        self.win = win
 
     def run(self):
 
@@ -37,9 +38,9 @@ class SerialGeneticAlgorithm(GeneticAlgorithm):
                 self.agent.setTowers(self.agent.population[i])
                 # bool: visualMode, Towers: Agent.currentTowers, blank GameRecord, returns a record of the game stats, 
                 # None for the deepQagent the game now expects 
-                game = Game(self.visualMode, self.agent.currentTowers, GameRecord(), self.collectInnerGameData, None)
+                gamea = Game(self.win,self.visualMode, self.agent.currentTowers, GameRecord(), self.collectInnerGameData)
                 # collects stats for the whole game
-                record = game.run()
+                record = gamea.run()
                 # print(len(record.randomChoicesRecord))
 
                 # print('\nList Size: ' + str(len(record.randomChoicesMade)))

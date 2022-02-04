@@ -8,7 +8,7 @@ from joblib import Parallel, delayed
 from constants.aiConstants import *
 from constants.gameConstants import *
 from agent.geneticAgent import GeneticAgent
-from Tower_defense import Game #, InnerGameRecord
+from Tower_defense import Game , InnerGameRecord
 
 
 class GameRecord:
@@ -46,6 +46,7 @@ class GeneticAlgorithm:
         self.printGraphs           = printGraphs
         self.collectWholeGameData  = collectWholeGameData
         self.collectInnerGameData  = collectInnerGameData
+        # self.win = win
 
 
 
