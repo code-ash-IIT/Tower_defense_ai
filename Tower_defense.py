@@ -7,11 +7,19 @@ from enemies.zombie import Zombie
 from enemies.rick import Rick
 from enemies.giant import Giant
 from enemies.baby_zombie import Baby_zombie
+
 from towers.archerTower import ArcherTower, ArcherTowerShort
 from towers.supportTower import DamageTower, RangeTower
+
 from menu.menu import VerticalMenu, PlayPauseButton
+
 import time
 import random
+
+from constants.gameConstants import *
+from constants.aiConstants import *
+from constants.animationConstants import *
+
 pygame.font.init()
 pygame.init()
 
@@ -84,8 +92,8 @@ class Game:
         self.collectInnerGameData = collectInnerGameData
         self.innerGameRecords     = []
         
-        self.width = 900
-        self.height = 674
+        self.width = WIN_WIDTH
+        self.height = WIN_HEIGHT
         self.win = win
         self.enemys = []
         self.attack_towers = []
@@ -95,7 +103,7 @@ class Game:
         self.bg = pygame.image.load(os.path.join("assets", "bg.png"))
         self.bg = pygame.transform.scale(self.bg, (self.width, self.height))
         self.timer = time.time()
-        self.life_font = pygame.font.SysFont("comicsans", 65)
+        self.life_font = pygame.font.SysFont("arial", 50)
         self.selected_tower = None
         self.menu = VerticalMenu(self.width - side_img.get_width() + 70, 250, side_img)
         self.menu.add_btn(buy_archer, "buy_archer", 500)
@@ -344,7 +352,7 @@ class Game:
 
         # draw wave
         self.win.blit(wave_bg, (10,10))
-        text = self.life_font.render("Wave #" + str(self.wave), 1, (255,255,255))
+        text = self.life_font.render("Level #" + str(self.wave), 1, (255,255,255))
         self.win.blit(text, (10 + wave_bg.get_width()/2 - text.get_width()/2, 25))
 
         pygame.display.update()

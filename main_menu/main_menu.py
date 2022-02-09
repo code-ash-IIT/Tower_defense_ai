@@ -7,6 +7,9 @@ from enum import Enum
 import pygame
 import os
 
+from agent.geneticAgent import GeneticAgent
+from constants.gameConstants import *
+
 start_btn = pygame.transform.scale(pygame.image.load(os.path.join("assets", "button_play.png")).convert_alpha(),(150,150))
 logo = pygame.transform.scale(pygame.image.load(os.path.join("assets", "logo.png")).convert_alpha(),(900,350))
 ai_btn = pygame.transform.scale(pygame.image.load(os.path.join("assets", "ai.png")).convert_alpha(),(150,150))
