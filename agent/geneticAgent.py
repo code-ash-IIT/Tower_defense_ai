@@ -44,8 +44,11 @@ class GeneticAgent:
             #   place the corresonding tower in that position
             if citizen[i] != 0:
                 currentTower = int(citizen[i]) - 1
-                newTowerPosition = ((TOWER_GRID[i][0] + (TOWER_GRID_SIZE / 2), TOWER_GRID[i][1] + (TOWER_GRID_SIZE / 2)))
-                newTower = TOWER_TYPES[currentTower](newTowerPosition)
+                # changes by vikas dangi
+                # newTowerPosition = (TOWER_GRID[i][0] + (TOWER_GRID_SIZE / 2), TOWER_GRID[i][1] + (TOWER_GRID_SIZE / 2))
+                temp_x=TOWER_GRID[i][0] + (TOWER_GRID_SIZE / 2)
+                temp_y=TOWER_GRID[i][1] + (TOWER_GRID_SIZE / 2)
+                newTower = TOWER_TYPES[currentTower](temp_x, temp_y)
                 # newTower = TOWER_TYPES[currentTower] # working with this, not with above code
                 self.currentTowers.append(newTower)
 
