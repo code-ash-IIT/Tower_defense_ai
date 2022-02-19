@@ -91,6 +91,9 @@ class Game:
         self.gameRecord           = gameRecord
         self.collectInnerGameData = collectInnerGameData
         self.innerGameRecords     = []
+        self.towers       = towers
+        self.towerGrid    = [] #Holds all possible locations for a tower to be placed, and whether one is there or not, and the type of tower place
+
         
         self.width = WIN_WIDTH
         self.height = WIN_HEIGHT
@@ -117,6 +120,8 @@ class Game:
         self.music_on = True
         self.playPauseButton = PlayPauseButton(play_btn, pause_btn, 10, self.height - 85)
         self.soundButton = PlayPauseButton(sound_btn, sound_btn_off, 90, self.height - 85)
+
+        self.initTowerGrid()
 
     def gen_enemies(self):
         """
@@ -150,10 +155,10 @@ class Game:
                     self.timer = time.time()
                     self.gen_enemies()
 
-                # # entry point for GAagent for data collection
-                # # if self.collectInnerGameData:
-                # #     if self.wallet.coins >= BUYING_THRESHOLD and len(self.towers) <= NUMBER_OF_STARTING_TOWERS:
-                # #         self.chooseNewTowerRandomly()
+                # entry point for GAagent for data collection
+                if self.collectInnerGameData:
+                    if self.money >= BUYING_THRESHOLD and len(self.towers) <= NUMBER_OF_STARTING_TOWERS:
+                        self.chooseNewTowerRandomly()
                 # self.spawnEnemies()
                 # self.towerHealthCheck()
                 # self.towersAttack()
@@ -371,44 +376,62 @@ class Game:
 
 
 
-    #   # Randomly buys a new tower and places it for data collection
-    # def chooseNewTowerRandomly(self):
+      # Randomly buys a new tower and places it for data collection
+    def chooseNewTowerRandomly(self):
 
-    #     while True:
-    #         towerType = random.randint(0, NUMBER_OF_TOWERS - 1)
-    #         towerPlacement = random.randint(0, STARTING_POSITIONS - 1)
-    #         if self.towerGrid[towerPlacement][1] == False:
-    #             # this will be used to map a tower to its record for data keeping purposes
-    #             index = len(self.innerGameRecords)
+        while True:
+            towerType = random.randint(0, NUMBER_OF_TOWERS - 1)
+            towerPlacement = random.randint(0, STARTING_POSITIONS - 1)
+            if self.towerGrid[towerPlacement][1] == False:
+                # this will be used to map a tower to its record for data keeping purposes
+                index = len(self.innerGameRecords)
 
-    #             # place a random tower type in a random position
-    #             self.towerGrid[towerPlacement] = ((TOWER_GRID[towerPlacement], True, towerType + 1))
-    #             self.placeTower(towerType, TOWER_GRID[towerPlacement], index)
+                # place a random tower type in a random position
+                self.towerGrid[towerPlacement] = ((TOWER_GRID[towerPlacement], True, towerType + 1))
+                self.placeTower(towerType, TOWER_GRID[towerPlacement], index)
 
-    #             # collect data for record
-    #             newRecord = InnerGameRecord()
-    #             newRecord.currentScore = self.score
-    #             newRecord.currentLevel = self.level
-    #             newRecord.currentEnemiesKilled = self.totalEnemiesKilled
-    #             newRecord.currentNumberOfEnemies = len(self.enemies)
-    #             newRecord.currentNumberOfTowers = len(self.towers)
-        #         newRecord.typeOfTowerPlaced = towerType
-        #         newRecord.towerX = TOWER_GRID[towerPlacement][0]
-        #         newRecord.towerY = TOWER_GRID[towerPlacement][1]
+                # collect data for record
+                newRecord = InnerGameRecord()
+                newRecord.currentScore = self.money
+                newRecord.currentLevel = self.wave
+                newRecord.currentEnemiesKilled = self.money
+                newRecord.currentNumberOfEnemies = len(self.enemys)
+                newRecord.currentNumberOfTowers = len(self.towers)
+                newRecord.typeOfTowerPlaced = towerType
+                newRecord.towerX = TOWER_GRID[towerPlacement][0]
+                newRecord.towerY = TOWER_GRID[towerPlacement][1]
 
-        #         for i in range(STARTING_POSITIONS):
-        #             if self.towerGrid[i][1] == False:
-        #                 newRecord.currentTowers.append(0)
-        #             else:
-        #                 # included a digit in tower grids tuples to include tower type
-        #                 newRecord.currentTowers.append(self.towerGrid[i][2])
+                for i in range(STARTING_POSITIONS):
+                    if self.towerGrid[i][1] == False:
+                        newRecord.currentTowers.append(0)
+                    else:
+                        # included a digit in tower grids tuples to include tower type
+                        newRecord.currentTowers.append(self.towerGrid[i][2])
 
-        #         # add new record to the list
-        #         self.innerGameRecords.append(newRecord)
+                # add new record to the list
+                self.innerGameRecords.append(newRecord)
 
-        #         break
+                break
 
-        # return
+        return
+
+    def initTowerGrid(self):
+        '''
+        Initializes tower grid based on hard coded values in TOWER_GRID
+        Second value is True if a tower is placed in that location
+        '''
+        for location in TOWER_GRID:
+            self.towerGrid.append((pygame.Rect(location, (TOWER_GRID_SIZE, TOWER_GRID_SIZE)), False, -1))
+
+    def drawTowerGrid(self, win):
+        for tower in self.towerGrid:
+            #Check if there's already a tower placed there
+            if tower[1] == False:
+                bgRect = pygame.Surface((GRID_DISPLAY_SIZE, GRID_DISPLAY_SIZE))
+                bgRect.set_alpha(100)
+                bgRect.fill((0, 100, 0))
+                position = (tower[0][0] + (TOWER_GRID_SIZE - GRID_DISPLAY_SIZE) / 2, tower[0][1] + (TOWER_GRID_SIZE - GRID_DISPLAY_SIZE) / 2)
+                self.win.blit(bgRect, position)
 
 
         
