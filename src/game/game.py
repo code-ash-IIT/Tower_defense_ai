@@ -25,7 +25,6 @@ from towers.igloo import Igloo
 from ui.wallet import Wallet
 from ui.menu import Menu
 
-from agent.qLearningAgent import QLearningAgent
 
 from constants.gameConstants import *
 from constants.aiConstants import *
@@ -118,24 +117,10 @@ class Game:
         self.updateSpawnProbabilities()
         self.initTowerGrid()
 
-        # deep Q things
-        self.deepQagent        = deepQagent
-        self.dqOldTowerGrid    = copy.deepcopy(self.towerGrid)
-        self.dqLastTowerPlaced = None
-        self.dqCurrentReward   = 0
-        # deep Q reward things?? the damage dealt worries me for the igloo
-        self.dqDamageDealt     = 0
-        self.dqDamageTaken     = 0
-        self.dqMaxedTowers     = False
-        self.deepDecisions     = []
-
         self.isPaused          = False
         self.currSelectedTower = None   #Type of tower currently being selected from menu
 
-        if self.deepQagent == None:
-            self.wallet = Wallet(self.coinPosition, STARTING_COINS)
-        else:
-            self.wallet = Wallet(self.coinPosition, DEEP_STARTING_COINS)
+        self.wallet = Wallet(self.coinPosition, STARTING_COINS)
 
         # print('Tower length = ' + str(len(self.towers)))
         # print('Starting Coins = ' + str(self.wallet.coins))
@@ -164,61 +149,6 @@ class Game:
                 run = self.isAlive()
                 self.ticks += 1
 
-                # entry point for the deepQ agent to make decisions and learn from
-
-                # all game states are the full tower grid of tuples
-                # signature for update model:   update(oldGameState, newGameState, reward):
-                #                                       oldGameState is the tower arrangment that is a result of the previous arrangment,
-                #                                       newGameState is the current tower arrangement
-                # signature for next action:    getNextAction(currentGameState):
-                towerLength = len(self.towers)
-                if towerLength == NUMBER_OF_STARTING_TOWERS:
-                    self.dqMaxedTowers = True
-                if self.deepQagent != None:
-                    if len(self.deepQagent.towerPlacements) <= 0:
-                        self.dqMaxedTowers = True            
-                if self.deepQagent != None and not self.dqMaxedTowers:
-                    if self.wallet.coins >= DEEP_BUYING_THRESHOLD and towerLength < NUMBER_OF_STARTING_TOWERS and not self.dqMaxedTowers:
-
-                        # this is returning a tower grid tuple from the agent
-                        if len(self.deepQagent.towerPlacements) > 0:
-                            newTower = self.deepQagent.getNextTower()
-
-                            # place the model chosen tower if possible
-                            taken = False
-                            if newTower[2] == -1:
-                                taken = True
-                            else:
-                                for i in range(len(self.towerGrid)):
-                                    if self.towerGrid[i][0][0] == newTower[0][0] and self.towerGrid[i][0][1] == newTower[0][1]:
-                                        if self.towerGrid[i][2] != -1:
-                                            # print('********Taken********')
-                                            taken = True
-                                            break
-                                        else:
-                                            self.towerGrid[i] = ((self.towerGrid[i][0], True, newTower[2]))
-
-                            
-                            # store a copy of the old tower grid state
-                            oldTowerGrid = copy.deepcopy(self.towerGrid)
-
-                            if not taken:
-                                # should place a tower of the given type between 0-5, and with a position from the model
-                                self.dqLastTowerPlaced = self.placeTower(newTower[2], newTower[0], -1)
-
-                                # print('Tower length = ' + str(len(self.towers)))
-
-                            else:
-                                # this will be a flag to say that a tower was placed on an existing tower location when we
-                                # calculate the results later, or if it tries to place a blank
-                                self.dqLastTowerPlaced = None
-
-                            # store a copy of the new grid state
-                            # newTowerGrid = copy.deepcopy(self.towerGrid)
-
-                            # self.deepDecisions.append((oldTowerGrid, newTowerGrid, self.dqLastTowerPlaced))
-                            self.deepDecisions.append((oldTowerGrid, self.dqLastTowerPlaced))
-
 
                 self.draw()
 
@@ -226,9 +156,6 @@ class Game:
 
         if self.collectInnerGameData or self.gameRecord != None:
             return self.gameRecord
-        elif self.deepQagent != None:
-            # return self.deepDecisions
-            return self.deepQagent
         else:
             return
 
@@ -673,32 +600,3 @@ class Game:
             self.gameRecord.earnings = self.wallet.coins
 
             # self.gameRecord.randomChoicesMade = self.innerGameRecords
-
-        if self.deepQagent != None:
-            self.updateDecisions()
-            self.deepQagent.finalScore = self.score
-            self.deepQagent.finalLevel = self.level
-
-
-    def updateDecisions(self):
-        # a decision: (oldTowerGrid, newTowerGrid, self.dqLastTowerPlaced) <-- reference to last tower placed
-        for decision in self.deepDecisions:
-            newReward = self.getReward(decision[1])
-            # update the model 
-            # self.deepQagent.update(decision[0], self.towerGrid, newReward)
-
-            self.deepQagent.deepDecisions.append((decision[0], self.towerGrid, newReward))
-
-
-    def getReward(self, tower):
-        reward = 0
-        if tower != None:
-            # reward =  tower.damageDealtOnTurn * 3
-            # reward -= tower.damageTakenOnTurn * 2
-            reward += self.score              
-        else:
-            reward += TOWER_POSITION_TAKEN_PENALTY
-
-        return reward
-
-TOWER_POSITION_TAKEN_PENALTY = -1000
