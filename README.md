@@ -1,7 +1,14 @@
 Tower-Defense-AI
 =============
 
-A fresh take on the classic tower defense game. Made in Python.
+A fresh take on the classic tower defense game and AI to play it. Made in Python. 
+The game contains 2 modes:
+1. Manual
+2. AI mode (genetic Algorithm mode)
+Player can choose to use the game in any of given modes.
+```bash
+Implemented Genetic Algorithm from scratch whose performance matches human level performance.
+```
 
 Usage
 -----
