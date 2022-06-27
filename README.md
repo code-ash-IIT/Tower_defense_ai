@@ -9,8 +9,8 @@ Usage
 The objective of the game is to stop enemy from crossing a map by building towers that slow them down and eventually destroy them. Players must manage their money and strategically place towers on the map to stop waves of enemy creeps that gain health and speed as the game progresses. Towers have varying characteristics such as dealing splash damage and slowing down creeps within a certain radius. The interface is largely intuitive as shown below
 
 <p align="center">
-![](/Images/gif.gif)
- </p>
+  <img src="/Images/gif.gif" alt="gameplay" />
+</p>
 
 Installation
 ------------
@@ -22,7 +22,7 @@ $ cd localDir/src
 $ python main.py
 ```
 
-Shots from GamePlay
+Shots from Gameplay
 -------------------
 
 <p align="center">
