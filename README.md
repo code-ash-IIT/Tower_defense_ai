@@ -26,13 +26,13 @@ Shots from GamePlay
 -------------------
 
 <p align="center">
-<img src="/Images/1">
+<img src="/Images/1.png">
 </p>
 <p align="center">
-<img src="/Images/2">
+<img src="/Images/2.png">
 </p>
 <p align="center">
-<img src="/Images/3ai">
+<img src="/Images/3ai.png">
 </p>
 
 
