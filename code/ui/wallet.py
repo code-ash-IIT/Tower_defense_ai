@@ -24,7 +24,7 @@ class Wallet:
         self.coins += coinsToAdd
 
     def spendCoins(self, coinsToSpend):
-        ''' Returns true if the player had enough coins and flase otherwise '''
+        """ Returns true if the player had enough coins and flase otherwise """
         if coinsToSpend > self.coins:
             return False
         else:

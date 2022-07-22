@@ -55,7 +55,7 @@ class Enemy:
             if self.frozen:
                 self.image = self.snowman
             else:
-                ''' Draws the enemy with given images '''
+                """ Draws the enemy with given images """
                 numImages = len(self.images)
                 # Set the image for # of frames ('//' means integer division)
                 self.image = self.images[self.animationCount // self.animationSpeed]
@@ -78,7 +78,7 @@ class Enemy:
 
 
     def drawHealthBox(self, win, centerX, centerY):
-        ''' Draws a health box above each character '''
+        """ Draws a health box above each character """
         if self.health > 0:
             healthBarX = self.x - (self.healthBarWidth / 2)
             healthBarY = centerY - (self.height / 2) + (self.healthBarYOffset)
@@ -91,7 +91,7 @@ class Enemy:
 
 
     def collide(self, col_x, col_y):
-        ''' Returns true if the coordinate has hit the enemy '''
+        """ Returns true if the coordinate has hit the enemy """
         if col_x <= self.x + self.width and col_x >= self.x:
             if col_y <= self.y + self.height and col_y >= self.y:
                 return True
@@ -152,13 +152,11 @@ class Enemy:
                 self.completed=True
 
 
-    def didPassPoint(self, x2, y2, dx, dy):                                                    #problem detected
-        '''
-        Increments the pathIndex if the enemy passes the next point.
+    def didPassPoint(self, x2, y2, dx, dy):                                                    #problem detected- problem SOLVED
+        """Increments the pathIndex if the enemy passes the next point.
         First checks for the direction that the enemy is walking in,
         and then if it surpassed the next point on the appropriate axis.
-        Note: pyGame axis starts from the top left corner
-        '''
+        Note: pyGame axis starts from the top left corner"""
         if dx > 0: #Moving right
             if dy > 0: #Moving down
                 if self.x >= x2 and self.y >= y2:
@@ -187,7 +185,7 @@ class Enemy:
 
 
     def hit(self, damage, damageType, ticks):
-        ''' Returns true if the enemy died and subtracts damage from its health '''
+        """ Returns true if the enemy died and subtracts damage from its health """
         if damageType == self.superWeakness:
             damage *= 2
         self.health = self.health - damage

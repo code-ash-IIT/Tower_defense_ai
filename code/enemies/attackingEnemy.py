@@ -25,10 +25,7 @@ class AttackingEnemy(Enemy):
 
         # only thawed enemies can attack
         if self.frozen == False:
-            '''
-            Looks for enemies within it's attack radius
-            Will find the closest one and attack it
-            '''
+            """Looks for enemies within it's attack radius will find the closest one and attack it"""
             # Check if the tower is ready to attack again
             if ticks >= self.canAttackTime:
                 attackableEnemies = []
@@ -63,7 +60,7 @@ class AttackingEnemy(Enemy):
             if self.frozen:
                 self.image = self.snowman
             else:
-                ''' Draws the enemy with given images '''
+                """ Draws the enemy with given images """
                 numImages = len(self.images)
                 # Set the image for # of frames ('//' means integer division)
                 self.image = self.images[self.animationCount // self.animationSpeed]

@@ -28,7 +28,7 @@ PRINT_GRAPHS   = False          # Prints graphs of score averages
 #      Game(visualMode, towers, gameRecord, collectInnerGameData, deepQagent)
 
 def main():
-    ''' Entry point for game '''
+    """ Start of main code including setup of mode of gameplay """
 
     #Setup Game
     pygame.init()
@@ -38,12 +38,12 @@ def main():
 
     displaySettings()
 
-    # Determine game mode
+    # game mode
     if GAME_MODE == MODE.manual:
         game = Game(True, [], None, False, None)
         game.run()
     else:
-        # we only use genetic algorithm
+        # here we use genetic algorithm
         if PARALLEL_MODE:
             gaAlgo = ParallelGeneticAlgorithm(VISUAL_MODE, READ_FILE, SAVE_TO_DISK, PRINT_GRAPHS, COLLECT_WHOLE_GAME_DATA, COLLECT_INNER_GAME_DATA)
         else:
@@ -53,7 +53,7 @@ def main():
     pygame.quit()
 
 def displaySettings():
-    ''' Displays the current game settings '''
+    """This function display current settings of the game on terminal  window """
     print(f"\n=== AI Tower Defense Settings ===")
     print(f"Game Mode:              {GAME_MODE.name}")
     print(f"Parallel Mode:          {PARALLEL_MODE}")

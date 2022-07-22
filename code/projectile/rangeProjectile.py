@@ -32,7 +32,7 @@ class RangeProjectile(Projectile):
     # draw a ranged weapon
     def draw(self, win, ticks, visualMode):
         if visualMode:
-            ''' Draws the enemy with given images '''
+            """ Draws the enemy with given images """
             numImages = len(self.images)
             self.image = self.images[self.animationCount // self.animationSpeed]
 

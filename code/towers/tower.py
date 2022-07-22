@@ -44,10 +44,7 @@ class Tower:
 
     # launches a tower attacking round
     def attack(self, enemies, ticks):
-        '''
-        Looks for enemies within it's attack radius
-        Will find the closest one and attack it
-        '''
+        """Looks for enemies within it's attack radius, will find the closest one and attack it """
         self.closeEnemies = enemies
 
         #Check if the tower is ready to attack again
@@ -81,7 +78,7 @@ class Tower:
         return enemies
 
 
-    ''' Draws a health box above each tower '''
+    """ Draws a health box above each tower"""
     def drawHealthBox(self, win, centerX, centerY):
         if self.health > 0:
             healthBarX = self.x - (self.healthBarWidth / 2)
@@ -122,7 +119,7 @@ class Tower:
             i += 1
 
         if visualMode:
-            ''' Render the tower to the map '''
+            """ Render the tower to the map """
             centerX = self.x - (self.width / 2)
             centerY = self.y - (self.height / 2)
             # cycle through our animations for drawing, i.e. explosions

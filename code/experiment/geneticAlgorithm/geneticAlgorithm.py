@@ -67,7 +67,7 @@ class GeneticAlgorithm:
             dataCollectionFile.write(gameRecord)
             dataCollectionFile.close()
         else:
-            ''' Saves the last trained population so you can load it later and continue training '''
+            """ Saves the last trained population so you can load it later and continue training """
             lastFitFile = open("lastfit_gen.txt","w")
             for citizen in self.agent.population:
                 populationString += (','.join(str(int(n)) for n in citizen)) + '\n'
@@ -155,7 +155,7 @@ class GeneticAlgorithm:
 
     # load populations from a text file
     def loadData(self):
-        ''' Loads previously saved trained population for GA so you can continue training '''
+        """ Loads previously saved trained population for GA so you can continue training """
         populationFile = open("lastfit_gen.txt","r")
         fileLines = populationFile.readlines()
         populationList = []
