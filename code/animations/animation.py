@@ -23,7 +23,7 @@ class Animation():
 
     # draws an animation by frames
     def draw(self, win):
-        ''' Draws the enemy with given images '''
+        """ Draws the enemy with given images """
         self.numImages = len(self.images)
         self.image = self.images[self.animationCount // self.animationSpeed]
         

@@ -7,7 +7,7 @@ IMG_SIZE = (60, 60)   #Size of tower buttons
 BOTTOM_PX = 40        #Area where name and cost are displayed
 
 class Menu:
-    ''' Creates a purchase menu of tower buttons '''
+    """ Creates a purchase menu of tower buttons """
     def __init__(self, position, towers):
         self.buttons = []
         self.position = position
@@ -35,7 +35,7 @@ class Menu:
         self.bgRect.fill((137, 139, 145))
 
     def draw(self, win):
-        ''' Draws the tower buttons over the background rect '''
+        """ Draws the tower buttons over the background rect object """
 
         #Draw the background
         win.blit(self.bgRect, self.position)
@@ -46,10 +46,8 @@ class Menu:
 
 
     def handleEvents(self, mousePosition, wallet, towerGrid):
-        '''
-        Handle if the user selects a tower button
-        Returns the tower type if a user selected one for purchasing
-        '''
+        """ Handle if the user selects a tower button, returns the tower type if a user selected one for purchasing """
+        
         buttonWasSelected = False
         i = 0
         for i in range(len(self.buttons)):

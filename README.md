@@ -26,7 +26,7 @@ Installation
 Clone the git repo into a local directory and run on the desktop
 ```bash
 $ git clone git@github.com:code-ash-IIT/Tower_defense_ai.git localDir/
-$ cd localDir/src
+$ cd localDir/code
 $ python main.py
 ```
 

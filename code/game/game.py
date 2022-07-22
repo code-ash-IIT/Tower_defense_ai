@@ -46,12 +46,12 @@ class InnerGameRecord:
         self.currentTowers = []
 
 
-'''
-Setup initial window and settings.
-Renders all objects and background to the screen.
-Handles user events (keyboard, mouse, etc)
-Keeps track of score.
-'''
+"""
+1. Initial window settings.
+2. Renders all objects and background to the screen.
+3. Keeps track of score.
+4. Handles user events (keyboard, mouse, etc)
+"""
 class Game:
 
     def __init__(self, visualMode, towers, gameRecord, collectInnerGameData, deepQagent):
@@ -64,7 +64,7 @@ class Game:
         if self.visualMode:
             self.startBgMusic()
 
-        ''' Initial window setup '''
+        """ Setup of initial win """
         self.width  = WIN_WIDTH
         self.height = WIN_HEIGHT
 
@@ -127,7 +127,7 @@ class Game:
 
 
     def run(self):
-        ''' Main game loop '''
+        """ Main game loop """
         run = True
         playerHasQuit = False
 
@@ -297,8 +297,8 @@ class Game:
         return False
 
 
-    ''' Removes enemies that have walked onto city tower'''
-    def removeEnemies(self):                                         #CHECK
+    """ Removes enemies that have walked onto city tower"""
+    def removeEnemies(self):                                         #CHECKED- BUG FIXED
         for enemy in self.enemies:
             if enemy.completed:#REPLACED CO-ORDINATES BY SELF.COMPLETED
                 if enemy.health <= enemy.initialHealth and enemy.health >= 0:
@@ -321,11 +321,7 @@ class Game:
 
 
     def spawnEnemies(self):
-        '''
-        Spawns enemies with random chance based on self.spawnChance
-        This value should increase as levels get more difficult
-        Caps number of enemies at once with self.numEnemiesPerLevel
-        '''
+        """This spawns enemies with random chance based on self.spawnChance, this value should increase as levels get more difficult, caps number of enemies at once with self.numEnemiesPerLevel"""
         shouldSpawn = random.random()
 
         #Check if there are still enemies to kill for this level
@@ -364,11 +360,7 @@ class Game:
 
 
     def draw(self):
-        '''
-        Redraw objects onces per frame.
-        Objects will be rendered sequentially,
-        meaning the code at the end will be rendered above all.
-        '''
+        """Redraw objects onces per frame, objects will be rendered sequentially, meaning that code at the end will be rendered above all."""
         if self.visualMode:
             #Render the background
             self.win.blit(self.bg, (0, 0))
@@ -422,11 +414,7 @@ class Game:
 
 
     def calcPathBounds(self):
-        '''
-        Calculates an array of rectangles that describe the enemies path
-        This function assumes that the ENEMY_PATH transitions are all straight lines
-        Stores a list of rectanlges in self.pathBounds
-        '''
+        """Calculates an array of rectangles that describe the enemies path. This function assumes that the ENEMY_PATH transitions are all straight lines, stores a list of rectanlges in self.pathBounds"""
         i = 0
         numPathPoints = len(ENEMY_PATH)
         for i in range(numPathPoints):
@@ -450,7 +438,7 @@ class Game:
 
 
     def drawPathBounds(self, win):
-        ''' Draws rectangles around the path bounds '''
+        """ Draws rectangles around the path bounds """
         for bound in self.pathBounds:
             self.bgRect = pygame.Surface((bound.width, bound.height))
             self.bgRect.set_alpha(125)
@@ -468,7 +456,7 @@ class Game:
                 self.win.blit(bgRect, position)
 
     def drawTowerRadius(self, win):
-        ''' Draws circle around tower at attack radius '''
+        """ Draws circle around tower at attack radius """
 
         if self.currSelectedTower != None:
             mousePosition = pygame.mouse.get_pos()
@@ -481,7 +469,7 @@ class Game:
 
 
     def displayTextUI(self, win, ):
-        ''' Render UI elements above all other graphics '''
+        """ Render UI elements above all other graphics """
         #Info about enemies
         numEnemiesText = "Enemies: " + str(self.enemiesSpawnedThisLevel) + " of " + str(int(self.numEnemiesPerLevel))
         numEnemiesPosition = (WIN_WIDTH-260, WIN_HEIGHT-50)
@@ -506,33 +494,33 @@ class Game:
 
 
     def displayText(self, text, position, font, color):
-        ''' Renders text at location using a specific font '''
+        """ Renders text at location using a specific font """
         surface = font.render(text, False, color)
         self.win.blit(surface, position)
 
 
     def updateSpawnProbabilities(self):
-        ''' Initialized list of enemy spawn probabilities '''
+        """ Initialized list of enemy spawn probabilities """
         for enemy in self.enemies:
             self.enemySpawnProbs.append(enemy.spawnChance)
 
 
     def updateEnemyWalkingSpeed(self):
-        ''' Bumps up the enemy speed every 2 levels by 1 '''
+        """ Bumps up the enemy speed every 2 levels by 1 """
         levelForIncrease = (self.level % NUMBER_LEVELS_SPEED_INCREASE) == 0
         if levelForIncrease:
             self.addedSpeed += SPEED_INCREASE
 
 
     def updateEnemyHealth(self):
-        ''' Bumps up the enemy health every 3 levels by 2 '''
+        """ Bumps up the enemy health every 3 levels by 2 """
         levelForIncrease = (self.level % NUMBER_LEVELS_HEALTH_INCREASE) == 0
         if levelForIncrease:
             self.addedHealth += HEALTH_INCREASE
 
 
     def getHealthColor(self):
-        ''' Changes the text color of the players health '''
+        """ Changes the text color of the players health """
         if self.health >= 90:
             return (0,100,0)
         elif self.health >= 75:
@@ -550,16 +538,13 @@ class Game:
 
 
     def initTowerGrid(self):
-        '''
-        Initializes tower grid based on hard coded values in TOWER_GRID
-        Second value is True if a tower is placed in that location
-        '''
+        """Initializes tower grid based on hard coded values in TOWER_GRID, second value is True if a tower is placed in that location"""
         for location in TOWER_GRID:
             self.towerGrid.append((pygame.Rect(location, (TOWER_GRID_SIZE, TOWER_GRID_SIZE)), False, -1))
 
 
     def showClicks(self):
-        ''' Displays click locations and rectangles to assist with towerGrid placement and logs coordinates to terminal '''
+        """ Displays click locations and rectangles to assist with towerGrid placement and logs coordinates to terminal """
         if SHOW_CLICKS:
             #Display already placed squares
             for p in self.clicks:
