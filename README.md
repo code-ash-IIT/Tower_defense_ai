@@ -26,7 +26,7 @@ Model-Free RL
 9. <a href="https://arxiv.org/abs/1710.10044" target="_blank">Quantile Regression DQN (QR-DQN)</a>
 10. <a href="https://arxiv.org/abs/1707.06887" target="_blank">Hindsight Experience Replay (HER)</a>
 
-Model-Baded RL
+Model-Based RL
 1. <a href="https://arxiv.org/abs/1707.06887" target="_blank">World Models </a>
 2. <a href="https://arxiv.org/abs/1707.06887" target="_blank">Imagination-Augmented Agents (I2A)</a>
 3. <a href="https://arxiv.org/abs/1707.06887" target="_blank">Model-Based RL with Model-Free Fine-Tuning (MBMF)</a>
