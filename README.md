@@ -11,6 +11,29 @@ Player can choose to use the game in any of given modes.
 Implemented Genetic Algorithm from scratch whose performance matches human level performance.
 ```
 
+Alternative RL Algorithms
+-------------------
+
+Model-Free RL
+1. <a href="https://arxiv.org/abs/1602.01783#" target="_blank">Asynchronous Advantage Actor-Critic (A2C/A3C)</a>
+2. <a href="https://arxiv.org/abs/1707.06347" target="_blank">Proximal Policy Optimization (PPO)</a>
+3. <a href="https://arxiv.org/abs/1502.05477" target="_blank">Trust Region Policy Optimization (TRPO)</a>
+4. <a href="https://arxiv.org/abs/1509.02971" target="_blank">Deep Deterministic Policy Gradient (DDPG)</a>
+5. <a href="https://arxiv.org/abs/1802.09477" target="_blank">Twin Delayed DDPG (TD3)</a>
+6. <a href="https://arxiv.org/abs/1801.01290" target="_blank">Soft Actor-Critic (SAC)</a>
+7. <a href="https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf" target="_blank">Deep Q-Networks (DQN)</a>
+8. <a href="https://arxiv.org/abs/1707.06887" target="_blank">Categorical 51-Atom DQN (C51)</a>
+9. <a href="https://arxiv.org/abs/1710.10044" target="_blank">Quantile Regression DQN (QR-DQN)</a>
+10. <a href="https://arxiv.org/abs/1707.06887" target="_blank">Hindsight Experience Replay (HER)</a>
+
+Model-Baded RL
+1. <a href="https://arxiv.org/abs/1707.06887" target="_blank">World Models </a>
+2. <a href="https://arxiv.org/abs/1707.06887" target="_blank">Imagination-Augmented Agents (I2A)</a>
+3. <a href="https://arxiv.org/abs/1707.06887" target="_blank">Model-Based RL with Model-Free Fine-Tuning (MBMF)</a>
+4. <a href="https://arxiv.org/abs/1707.06887" target="_blank">Model-Based Value Expansion (MBVE)</a>
+5. <a href="https://arxiv.org/abs/1707.06887" target="_blank">AlphaZero</a>
+
+
 Usage
 -----
 
